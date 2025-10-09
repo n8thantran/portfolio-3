@@ -73,18 +73,18 @@ const AccordionItem = ({ timeline, label, children, isOpen, onToggle }: Accordio
   return (
     <div
       data-open={isOpen ? "true" : "false"}
-      className="group border-b border-transparent pb-3 last:border-none last:pb-0"
+      className="group border-b border-transparent pb-2 sm:pb-3 last:border-none last:pb-0"
     >
       <button
         type="button"
         aria-expanded={isOpen}
         aria-controls={contentId}
         onClick={onToggle}
-  className="summary-trigger relative flex w-full flex-wrap items-center gap-3 rounded-[18px] px-4 py-3 text-left text-xs uppercase tracking-[0.32em] text-[color:var(--muted)] transition-colors hover:bg-[color:var(--border)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"
+  className="summary-trigger relative flex w-full flex-wrap items-center gap-2 sm:gap-3 rounded-[14px] sm:rounded-[18px] px-3 py-2.5 sm:px-4 sm:py-3 text-left text-[10px] sm:text-xs uppercase tracking-[0.24em] sm:tracking-[0.32em] text-[color:var(--muted)] transition-colors hover:bg-[color:var(--border)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"
       >
-  <span className="summary-timeline text-[10px] tracking-[0.42em]">{timeline}</span>
+  <span className="summary-timeline text-[9px] sm:text-[10px] tracking-[0.32em] sm:tracking-[0.42em] whitespace-nowrap">{timeline}</span>
         <span className="summary-divider" aria-hidden />
-        <span className="summary-title text-current">{label}</span>
+        <span className="summary-title text-current text-[10px] sm:text-xs">{label}</span>
       </button>
       <div
         id={contentId}
@@ -95,7 +95,7 @@ const AccordionItem = ({ timeline, label, children, isOpen, onToggle }: Accordio
       >
         <div
           ref={contentRef}
-          className={`summary-content space-y-2 pt-3 pb-3 text-sm leading-7 text-[color:var(--foreground)] transition-all ease-[cubic-bezier(0.4,0,0.2,1)]`}
+          className={`summary-content space-y-1.5 sm:space-y-2 pt-2 sm:pt-3 pb-2 sm:pb-3 text-xs sm:text-sm leading-6 sm:leading-7 text-[color:var(--foreground)] transition-all ease-[cubic-bezier(0.4,0,0.2,1)]`}
           style={{ 
             transitionDuration: `${ACCORDION_ANIMATION_DURATION}ms`,
             opacity: isOpen ? 1 : 0,
@@ -306,20 +306,20 @@ export default function Home() {
   const { openIndex: hackathonOpen, toggle: toggleHackathon } = useSequentialAccordion();
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-6 py-16 sm:py-20">
-      <div className="w-full max-w-5xl space-y-12">
-        <header className="flex items-center gap-6 text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
-          <span className="font-mono text-[12px] tracking-[0.32em] text-[color:var(--foreground)]">
+    <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 sm:py-16 md:py-20">
+      <div className="w-full max-w-5xl space-y-8 sm:space-y-12">
+        <header className="flex flex-wrap items-center gap-3 sm:gap-4 md:gap-6 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
+          <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.28em] sm:tracking-[0.32em] text-[color:var(--foreground)]">
             {time || "--:--:--"}
           </span>
-          <span className="h-px flex-1 bg-[color:var(--border)]" aria-hidden />
+          <span className="hidden sm:block h-px flex-1 bg-[color:var(--border)]" aria-hidden />
           <a
             href="https://linkedin.com/in/n8thantran"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-left hover:bg-[color:var(--border)] transition-colors"
+            className="group inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-[color:var(--border)] px-2.5 py-1.5 sm:px-3 text-left hover:bg-[color:var(--border)] transition-colors"
           >
-            <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
               LinkedIn
             </span>
           </a>
@@ -327,17 +327,17 @@ export default function Home() {
             href="https://github.com/n8thantran"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-left hover:bg-[color:var(--border)] transition-colors"
+            className="group inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-[color:var(--border)] px-2.5 py-1.5 sm:px-3 text-left hover:bg-[color:var(--border)] transition-colors"
           >
-            <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
               GitHub
             </span>
           </a>
           <a
             href="/resume"
-            className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-left hover:bg-[color:var(--border)] transition-colors"
+            className="group inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-[color:var(--border)] px-2.5 py-1.5 sm:px-3 text-left hover:bg-[color:var(--border)] transition-colors"
           >
-            <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
               Resume
             </span>
           </a>
@@ -347,68 +347,68 @@ export default function Home() {
             onClick={toggleTheme}
             disabled={!theme}
             aria-pressed={theme === "dark"}
-            className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-left disabled:cursor-wait disabled:opacity-50"
+            className="group inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-[color:var(--border)] px-2.5 py-1.5 sm:px-3 text-left disabled:cursor-wait disabled:opacity-50"
           >
-            <span className="text-lg leading-none text-[color:var(--foreground)] group-hover:text-[color:var(--muted)] transition-colors">
+            <span className="text-base sm:text-lg leading-none text-[color:var(--foreground)] group-hover:text-[color:var(--muted)] transition-colors">
               {modeIcon}
             </span>
-            <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
+            <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
               {modeLabel}
             </span>
           </button>
         </header>
 
-  <main className="grid gap-12 border-b border-[color:var(--border)] pb-12 pt-6 lg:grid-cols-[minmax(240px,1fr)_minmax(360px,1.5fr)] lg:gap-16">
-          <section className="flex flex-col gap-12">
-            <div className="space-y-4">
-              <h1 className="text-3xl font-medium tracking-tight sm:text-[40px]">Nathan Tran</h1>
-              <p className="text-xs uppercase tracking-[0.32em] text-[color:var(--muted)]">
+  <main className="grid gap-8 sm:gap-12 border-b border-[color:var(--border)] pb-8 sm:pb-12 pt-4 sm:pt-6 lg:grid-cols-[minmax(240px,1fr)_minmax(360px,1.5fr)] lg:gap-16">
+          <section className="flex flex-col gap-8 sm:gap-12">
+            <div className="space-y-3 sm:space-y-4">
+              <h1 className="text-2xl sm:text-3xl md:text-[40px] font-medium tracking-tight">Nathan Tran</h1>
+              <p className="text-[10px] sm:text-xs uppercase tracking-[0.28em] sm:tracking-[0.32em] text-[color:var(--muted)]">
                 cs @ sjsu
               </p>
             </div>
 
-            <section className="flex flex-col gap-8">
-              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+            <section className="flex flex-col gap-6 sm:gap-8">
+              <header className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                 education
               </header>
-              <article className="space-y-3">
-                <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+              <article className="space-y-2 sm:space-y-3">
+                <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                   {education.graduation}
                 </p>
-                <h3 className="text-base font-medium uppercase tracking-[0.28em] text-[color:var(--foreground)]">
+                <h3 className="text-sm sm:text-base font-medium uppercase tracking-[0.24em] sm:tracking-[0.28em] text-[color:var(--foreground)]">
                   {education.institution}
                 </h3>
-                <p className="text-xs uppercase tracking-[0.32em] text-[color:var(--muted)]">
+                <p className="text-[11px] sm:text-xs uppercase tracking-[0.28em] sm:tracking-[0.32em] text-[color:var(--muted)]">
                   {education.degree}
                 </p>
               </article>
             </section>
 
-            <section className="flex flex-col gap-6">
-              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+            <section className="flex flex-col gap-4 sm:gap-6">
+              <header className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                 organizations & activities
               </header>
-              <div className="space-y-2 text-sm leading-7 text-[color:var(--foreground)]">
+              <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm leading-6 sm:leading-7 text-[color:var(--foreground)]">
                 {activities.map((activity) => (
                   <p key={activity}>— {activity}</p>
                 ))}
               </div>
             </section>
 
-            <section className="flex flex-col gap-6">
-              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+            <section className="flex flex-col gap-4 sm:gap-6">
+              <header className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                 now playing
               </header>
-              <div className="rounded-[22px] border border-[color:var(--border)] p-4">
+              <div className="rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-3 sm:p-4">
                 {nowPlaying?.track ? (
                   <a 
                     href={nowPlaying.track.url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center gap-4 group"
+                    className="flex items-center gap-3 sm:gap-4 group"
                   >
                     {nowPlaying.track.albumArt && (
-                      <div className="relative w-16 h-16 flex-shrink-0">
+                      <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
                         <img 
                           src={nowPlaying.track.albumArt} 
                           alt={`${nowPlaying.track.album} album art`}
@@ -417,26 +417,26 @@ export default function Home() {
                         <div className="absolute inset-0 rounded-lg bg-black opacity-0 group-hover:opacity-10 transition-opacity" />
                       </div>
                     )}
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <p className="text-sm font-medium text-[color:var(--foreground)] truncate group-hover:text-[color:var(--muted)] transition-colors">
+                    <div className="flex-1 min-w-0 space-y-0.5 sm:space-y-1">
+                      <p className="text-xs sm:text-sm font-medium text-[color:var(--foreground)] truncate group-hover:text-[color:var(--muted)] transition-colors">
                         {nowPlaying.track.name}
                       </p>
-                      <p className="text-xs text-[color:var(--muted)] truncate">
+                      <p className="text-[11px] sm:text-xs text-[color:var(--muted)] truncate">
                         {nowPlaying.track.artist}
                       </p>
                       {nowPlaying.isPlaying ? (
-                        <div className="flex items-center gap-2">
-                          <span className="relative flex h-2 w-2">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-green-500"></span>
                           </span>
-                          <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+                          <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                             listening now
                           </span>
                         </div>
                       ) : (
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                             last played
                           </span>
                         </div>
@@ -444,23 +444,23 @@ export default function Home() {
                     </div>
                   </a>
                 ) : (
-                  <div className="flex items-center gap-3 text-[color:var(--muted)]">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <div className="flex items-center gap-2 sm:gap-3 text-[color:var(--muted)]">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
                     </svg>
-                    <span className="text-xs">Not playing anything right now</span>
+                    <span className="text-[11px] sm:text-xs">Not playing anything right now</span>
                   </div>
                 )}
               </div>
             </section>
           </section>
 
-          <section className="flex flex-col gap-12">
-            <div className="flex flex-col gap-6">
-              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+          <section className="flex flex-col gap-8 sm:gap-12">
+            <div className="flex flex-col gap-4 sm:gap-6">
+              <header className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                 work experience
               </header>
-              <div className="space-y-3 rounded-[22px] border border-[color:var(--border)] p-6">
+              <div className="space-y-3 rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-4 sm:p-6">
                 {workExperience.map((item, index) => (
                   <AccordionItem
                     key={item.company}
@@ -479,18 +479,18 @@ export default function Home() {
                     isOpen={experienceOpen === index}
                     onToggle={() => toggleExperience(index)}
                   >
-                    <p className="text-[11px] uppercase tracking-[0.32em] text-[color:var(--muted)]">{item.role}</p>
+                    <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] sm:tracking-[0.32em] text-[color:var(--muted)]">{item.role}</p>
                     <p>{item.summary}</p>
                   </AccordionItem>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col gap-6">
-              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+            <div className="flex flex-col gap-4 sm:gap-6">
+              <header className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
                 hackathons
               </header>
-              <div className="space-y-3 rounded-[22px] border border-[color:var(--border)] p-6">
+              <div className="space-y-3 rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-4 sm:p-6">
                 {hackathons.map((item, index) => (
                   <AccordionItem
                     key={item.title}
@@ -499,17 +499,17 @@ export default function Home() {
                     isOpen={hackathonOpen === index}
                     onToggle={() => toggleHackathon(index)}
                   >
-                    <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">{item.location}</p>
+                    <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">{item.location}</p>
                     <p>{item.summary}</p>
                     {item.links && item.links.length > 0 && (
-                      <div className="flex flex-wrap gap-3 mt-3">
+                      <div className="flex flex-wrap gap-2 sm:gap-3 mt-2 sm:mt-3">
                         {item.links.map((link) => (
                           <a
                             key={link.url}
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[11px] uppercase tracking-[0.32em] text-[color:var(--muted)] hover:text-[color:var(--accent)] transition-colors underline decoration-dotted underline-offset-4"
+                            className="text-[10px] sm:text-[11px] uppercase tracking-[0.28em] sm:tracking-[0.32em] text-[color:var(--muted)] hover:text-[color:var(--accent)] transition-colors underline decoration-dotted underline-offset-4"
                           >
                             {link.label}
                           </a>
@@ -523,18 +523,18 @@ export default function Home() {
           </section>
         </main>
 
-        <footer className="flex items-center gap-4 text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
-          <span>nathan tran</span>
+        <footer className="flex items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
+          <span className="whitespace-nowrap">nathan tran</span>
           <span className="h-px flex-1 bg-[color:var(--border)]" aria-hidden />
           <a
             href="/parking"
-            className="transition-opacity hover:opacity-70"
+            className="flex items-center transition-opacity hover:opacity-70"
             aria-label="SJSU Parking Status"
             title="SJSU Parking Status"
           >
             🚗
           </a>
-          <span>updated 2025</span>
+          <span className="whitespace-nowrap">updated 2025</span>
         </footer>
       </div>
     </div>

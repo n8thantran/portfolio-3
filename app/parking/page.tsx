@@ -60,25 +60,25 @@ const ParkingCard = ({
   };
 
   return (
-    <div className="rounded-[22px] border border-[color:var(--border)] p-6 w-full flex flex-col transition-all hover:border-[color:var(--muted)]">
+    <div className="rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-4 sm:p-6 w-full flex flex-col transition-all hover:border-[color:var(--muted)]">
       <div className="flex-grow">
-        <h3 className="text-lg uppercase tracking-[0.32em] text-[color:var(--foreground)] mb-4">
+        <h3 className="text-base sm:text-lg uppercase tracking-[0.24em] sm:tracking-[0.32em] text-[color:var(--foreground)] mb-3 sm:mb-4">
           {name}
         </h3>
         {open !== null ? (
           <>
-            <div className="my-4">
-              <p className="text-4xl font-light text-[color:var(--foreground)]">
+            <div className="my-3 sm:my-4">
+              <p className="text-3xl sm:text-4xl font-light text-[color:var(--foreground)]">
                 {Math.round(occupancyPercentage)}%
-                <span className="text-sm uppercase tracking-[0.42em] text-[color:var(--muted)] ml-2">
+                <span className="text-xs sm:text-sm uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] ml-2">
                   occupied
                 </span>
               </p>
-              <p className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)] mt-2">
+              <p className="text-[10px] sm:text-xs uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] mt-1.5 sm:mt-2">
                 {openSpots} of {total} spots • {getOccupancyStatus()}
               </p>
             </div>
-            <div className="w-full bg-[color:var(--border)] rounded-full h-2 my-4">
+            <div className="w-full bg-[color:var(--border)] rounded-full h-2 my-3 sm:my-4">
               <div
                 className={`h-2 rounded-full transition-all duration-300 ${getBarColor()}`}
                 style={{ width: `${Math.min(occupancyPercentage, 100)}%` }}
@@ -87,15 +87,15 @@ const ParkingCard = ({
           </>
         ) : (
           <>
-            <div className="my-4">
-              <p className="text-xl text-[color:var(--muted)]">
+            <div className="my-3 sm:my-4">
+              <p className="text-lg sm:text-xl text-[color:var(--muted)]">
                 Data not available
               </p>
-              <p className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)] mt-2">
+              <p className="text-[10px] sm:text-xs uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] mt-1.5 sm:mt-2">
                 Unable to retrieve current occupancy data
               </p>
             </div>
-            <div className="w-full bg-[color:var(--border)] rounded-full h-2 my-4">
+            <div className="w-full bg-[color:var(--border)] rounded-full h-2 my-3 sm:my-4">
               <div className="h-2 rounded-full bg-[color:var(--muted)] animate-pulse"></div>
             </div>
           </>
@@ -103,13 +103,13 @@ const ParkingCard = ({
       </div>
 
       {address && (
-        <div className="mt-auto pt-4 text-left">
-          <p className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)] mb-3">
+        <div className="mt-auto pt-3 sm:pt-4 text-left">
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)] mb-2 sm:mb-3">
             {address}
           </p>
           <button
             onClick={handleOpenMaps}
-            className="w-full text-center px-4 py-3 rounded-[18px] border border-[color:var(--border)] text-xs uppercase tracking-[0.32em] text-[color:var(--muted)] hover:bg-[color:var(--border)]/20 transition-colors"
+            className="w-full text-center px-3 py-2.5 sm:px-4 sm:py-3 rounded-[14px] sm:rounded-[18px] border border-[color:var(--border)] text-[10px] sm:text-xs uppercase tracking-[0.28em] sm:tracking-[0.32em] text-[color:var(--muted)] hover:bg-[color:var(--border)]/20 transition-colors"
           >
             Open in Maps
           </button>
@@ -181,16 +181,16 @@ export default function ParkingPage() {
       data-theme={theme || "dark"}
       className="flex min-h-screen flex-col bg-[color:var(--background)] font-[family-name:var(--font-geist-sans)] text-[color:var(--foreground)] antialiased transition-colors"
     >
-      <div className="mx-auto flex w-full max-w-[800px] flex-1 flex-col gap-12 p-6 sm:p-8 md:gap-16 md:p-12">
-        <header className="flex items-center gap-4 text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+      <div className="mx-auto flex w-full max-w-[800px] flex-1 flex-col gap-8 sm:gap-12 p-4 sm:p-6 md:p-8 lg:gap-16 lg:p-12">
+        <header className="flex flex-wrap items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
           <Link 
             href="/"
-            className="hover:text-[color:var(--foreground)] transition-colors cursor-pointer"
+            className="hover:text-[color:var(--foreground)] transition-colors cursor-pointer whitespace-nowrap"
           >
             ← Home
           </Link>
           <span className="h-px flex-1 bg-[color:var(--border)]" aria-hidden />
-          <span className="tabular-nums">{time}</span>
+          <span className="tabular-nums whitespace-nowrap">{time}</span>
           <button
             type="button"
             onClick={() => {
@@ -200,39 +200,39 @@ export default function ParkingPage() {
               window.localStorage.setItem(STORAGE_KEY, nextTheme);
               setTheme(nextTheme);
             }}
-            className="flex h-6 w-6 items-center justify-center text-base transition-opacity hover:opacity-70"
+            className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center text-sm sm:text-base transition-opacity hover:opacity-70"
             aria-label="Toggle theme"
           >
             {modeIcon}
           </button>
         </header>
 
-        <main className="flex flex-1 flex-col gap-12">
-          <section className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-              <h1 className="text-[32px] font-light leading-[1.2] tracking-tight text-[color:var(--foreground)]">
+        <main className="flex flex-1 flex-col gap-8 sm:gap-12">
+          <section className="flex flex-col gap-4 sm:gap-6">
+            <div className="flex flex-col gap-2 sm:gap-3">
+              <h1 className="text-[28px] sm:text-[32px] font-light leading-[1.2] tracking-tight text-[color:var(--foreground)]">
                 SJSU Parking Status
               </h1>
-              <p className="text-sm leading-7 text-[color:var(--muted)]">
+              <p className="text-xs sm:text-sm leading-6 sm:leading-7 text-[color:var(--muted)]">
                 Real-time occupancy levels and availability for campus parking garages.
               </p>
             </div>
 
             {loading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {[...Array(4)].map((_, i) => (
                   <div
                     key={i}
-                    className="rounded-[22px] border border-[color:var(--border)] p-6 animate-pulse"
+                    className="rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-4 sm:p-6 animate-pulse"
                   >
-                    <div className="h-6 bg-[color:var(--border)] rounded w-3/4 mb-4"></div>
-                    <div className="h-10 bg-[color:var(--border)] rounded w-1/2 mb-4"></div>
+                    <div className="h-5 sm:h-6 bg-[color:var(--border)] rounded w-3/4 mb-3 sm:mb-4"></div>
+                    <div className="h-8 sm:h-10 bg-[color:var(--border)] rounded w-1/2 mb-3 sm:mb-4"></div>
                     <div className="h-2 bg-[color:var(--border)] rounded-full w-full"></div>
                   </div>
                 ))}
               </div>
             ) : data ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {Object.entries(data).map(([name, details]) => (
                   <ParkingCard
                     key={name}
@@ -243,8 +243,8 @@ export default function ParkingPage() {
                 ))}
               </div>
             ) : (
-              <div className="rounded-[22px] border border-[color:var(--border)] p-6 text-center">
-                <p className="text-sm text-[color:var(--muted)]">
+              <div className="rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-4 sm:p-6 text-center">
+                <p className="text-xs sm:text-sm text-[color:var(--muted)]">
                   Could not load parking data. Please try again later.
                 </p>
               </div>
@@ -252,10 +252,10 @@ export default function ParkingPage() {
           </section>
         </main>
 
-        <footer className="flex items-center gap-4 text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
-          <span>SJSU Parking</span>
+        <footer className="flex items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
+          <span className="whitespace-nowrap">SJSU Parking</span>
           <span className="h-px flex-1 bg-[color:var(--border)]" aria-hidden />
-          <span>updated 2025</span>
+          <span className="whitespace-nowrap">updated 2025</span>
         </footer>
       </div>
     </div>

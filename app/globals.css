@@ -62,9 +62,15 @@ details > summary::-webkit-details-marker {
 .summary-divider {
   flex: 1;
   height: 1px;
-  min-width: 32px;
+  min-width: 20px;
   background: var(--border);
   transition: background 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .summary-divider {
+    min-width: 32px;
+  }
 }
 
 details > summary:hover .summary-divider,
@@ -87,11 +93,17 @@ details[open] > summary .summary-divider {
 
 .summary-title {
   flex: 1;
-  min-width: 160px;
+  min-width: 120px;
   text-align: right;
   white-space: normal;
   word-break: keep-all;
   line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .summary-title {
+    min-width: 160px;
+  }
 }
 
 .summary-content {
@@ -112,4 +124,27 @@ details[open] .summary-content {
 [data-open="true"] .summary-content {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Better touch targets for mobile */
+@media (max-width: 639px) {
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Allow smaller buttons when they're in groups */
+  header button, 
+  header a {
+    min-height: 36px;
+    min-width: auto;
+  }
+}
+
+/* Improve text readability on mobile */
+@media (max-width: 639px) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
