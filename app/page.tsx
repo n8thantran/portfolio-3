@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, useId } from "react";
+import type { ReactNode } from "react";
 
 type Theme = "light" | "dark";
 
@@ -10,6 +11,102 @@ const applyTheme = (theme: Theme) => {
   document.documentElement.dataset.theme = theme;
   document.documentElement.style.colorScheme = theme;
   window.localStorage.setItem(STORAGE_KEY, theme);
+};
+
+const ACCORDION_ANIMATION_DURATION = 400;
+
+const useSequentialAccordion = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggle = (index: number) => {
+    if (openIndex === index) {
+      setOpenIndex(null);
+      return;
+    }
+
+    setOpenIndex(index);
+  };
+
+  return { openIndex, toggle };
+};
+
+type AccordionItemProps = {
+  timeline: string;
+  label: string;
+  children: ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+};
+
+const AccordionItem = ({ timeline, label, children, isOpen, onToggle }: AccordionItemProps) => {
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [maxHeight, setMaxHeight] = useState(0);
+  const contentId = useId();
+
+  useEffect(() => {
+    if (!contentRef.current) {
+      return;
+    }
+
+    if (isOpen) {
+      setMaxHeight(contentRef.current.scrollHeight);
+    } else {
+      setMaxHeight(0);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || !contentRef.current || typeof window === "undefined" || !("ResizeObserver" in window)) {
+      return;
+    }
+
+    const element = contentRef.current;
+    const observer = new ResizeObserver(() => {
+      setMaxHeight(element.scrollHeight);
+    });
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [isOpen]);
+
+  return (
+    <div
+      data-open={isOpen ? "true" : "false"}
+      className="group border-b border-transparent pb-3 last:border-none last:pb-0"
+    >
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+        onClick={onToggle}
+  className="summary-trigger relative flex w-full flex-wrap items-center gap-3 rounded-[18px] px-4 py-3 text-left text-xs uppercase tracking-[0.32em] text-[color:var(--muted)] transition-colors hover:bg-[color:var(--border)]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)]"
+      >
+  <span className="summary-timeline text-[10px] tracking-[0.42em]">{timeline}</span>
+        <span className="summary-divider" aria-hidden />
+        <span className="summary-title text-current">{label}</span>
+      </button>
+      <div
+        id={contentId}
+        role="region"
+        aria-hidden={!isOpen}
+        style={{ maxHeight: `${maxHeight}px`, transitionDuration: `${ACCORDION_ANIMATION_DURATION}ms` }}
+        className="accordion-content overflow-hidden transition-[max-height] ease-[cubic-bezier(0.4,0,0.2,1)]"
+      >
+        <div
+          ref={contentRef}
+          className={`summary-content space-y-2 pt-3 pb-3 text-sm leading-7 text-[color:var(--foreground)] transition-all ease-[cubic-bezier(0.4,0,0.2,1)]`}
+          style={{ 
+            transitionDuration: `${ACCORDION_ANIMATION_DURATION}ms`,
+            opacity: isOpen ? 1 : 0,
+            transform: isOpen ? 'translateY(0)' : 'translateY(-8px)'
+          }}
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default function Home() {
@@ -66,7 +163,7 @@ export default function Home() {
     },
     {
       company: "Uber",
-      timeline: "Dec. 2024 - Present",
+      timeline: "Dec. 2024 - Sept. 2025",
       role: "Software Engineering Fellow",
       summary:
         "Selected for Uber's competitive career preparation program focused on technical interview preparation, data structures & algorithms, and software engineering best practices.",
@@ -87,8 +184,8 @@ export default function Home() {
     },
     {
       company: "Software and Computer Engineering Society",
-      timeline: "Sept. 2024 - Present",
-      role: "Artificial Intelligence & Machine Learning Team Lead",
+      timeline: "Sept. 2024 - Sept. 2025",
+      role: "AI/ML Team Lead",
       summary:
         "Led weekly workshops and team meetings focused on machine learning projects, guiding members through data analysis, model development, and collaborative coding practices using tools like Google Colab and Git.",
     },
@@ -150,9 +247,10 @@ export default function Home() {
 
   const activities = [
     "Software and Computer Engineering Society",
-    "Responsible Computing Club",
-    "Association for Computing Machinery (ACM)",
   ];
+
+  const { openIndex: experienceOpen, toggle: toggleExperience } = useSequentialAccordion();
+  const { openIndex: hackathonOpen, toggle: toggleHackathon } = useSequentialAccordion();
 
   return (
     <div className="flex min-h-screen items-center justify-center px-6 py-16 sm:py-20">
@@ -182,31 +280,31 @@ export default function Home() {
   <main className="grid gap-12 border-b border-[color:var(--border)] pb-12 pt-6 lg:grid-cols-[minmax(240px,1fr)_minmax(360px,1.5fr)] lg:gap-16">
           <section className="flex flex-col gap-12">
             <div className="space-y-4">
-              <h1 className="text-4xl font-medium tracking-tight sm:text-[52px]">Nathan Tran</h1>
-              <p className="text-sm uppercase tracking-[0.32em] text-[color:var(--muted)]">
+              <h1 className="text-3xl font-medium tracking-tight sm:text-[40px]">Nathan Tran</h1>
+              <p className="text-xs uppercase tracking-[0.32em] text-[color:var(--muted)]">
                 cs @ sjsu
               </p>
             </div>
 
             <section className="flex flex-col gap-8">
-              <header className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)]">
+              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
                 education
               </header>
               <article className="space-y-3">
                 <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
                   {education.graduation}
                 </p>
-                <h3 className="text-lg font-medium uppercase tracking-[0.28em] text-[color:var(--foreground)]">
+                <h3 className="text-base font-medium uppercase tracking-[0.28em] text-[color:var(--foreground)]">
                   {education.institution}
                 </h3>
-                <p className="text-sm uppercase tracking-[0.32em] text-[color:var(--muted)]">
+                <p className="text-xs uppercase tracking-[0.32em] text-[color:var(--muted)]">
                   {education.degree}
                 </p>
               </article>
             </section>
 
             <section className="flex flex-col gap-6">
-              <header className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)]">
+              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
                 organizations & activities
               </header>
               <div className="space-y-2 text-sm leading-7 text-[color:var(--foreground)]">
@@ -219,52 +317,46 @@ export default function Home() {
 
           <section className="flex flex-col gap-12">
             <div className="flex flex-col gap-6">
-              <header className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)]">
+              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
                 work experience
               </header>
               <div className="space-y-3 rounded-[22px] border border-[color:var(--border)] p-6">
-                {workExperience.map((item) => (
-                  <details key={item.company} className="group border-b border-transparent pb-3 last:border-none last:pb-0">
-                    <summary className="summary-trigger relative flex w-full flex-wrap items-center gap-3 rounded-[18px] px-4 py-3 text-sm uppercase tracking-[0.32em] text-[color:var(--muted)] transition-colors hover:bg-[color:var(--border)]/20 group-open:bg-[color:var(--border)]/15 group-open:text-[color:var(--foreground)]">
-                      <span className="summary-timeline text-[11px] tracking-[0.42em]">{item.timeline}</span>
-                      <span className="summary-divider" aria-hidden />
-                      <span className="summary-title text-current">{item.company}</span>
-                    </summary>
-                    <div className="summary-content mt-3 space-y-2 text-sm leading-7 text-[color:var(--foreground)]">
-                      <p className="uppercase tracking-[0.32em] text-[color:var(--muted)]">
-                        {item.role}
-                      </p>
-                      <p>{item.summary}</p>
-                    </div>
-                  </details>
+                {workExperience.map((item, index) => (
+                  <AccordionItem
+                    key={item.company}
+                    timeline={item.timeline}
+                    label={item.company}
+                    isOpen={experienceOpen === index}
+                    onToggle={() => toggleExperience(index)}
+                  >
+                    <p className="text-[11px] uppercase tracking-[0.32em] text-[color:var(--muted)]">{item.role}</p>
+                    <p>{item.summary}</p>
+                  </AccordionItem>
                 ))}
               </div>
             </div>
 
             <div className="flex flex-col gap-6">
-              <header className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)]">
+              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
                 hackathons
               </header>
               <div className="space-y-3 rounded-[22px] border border-[color:var(--border)] p-6">
-                {hackathons.map((item) => (
-                  <details key={item.title} className="group border-b border-transparent pb-3 last:border-none last:pb-0">
-                    <summary className="summary-trigger relative flex w-full flex-wrap items-center gap-3 rounded-[18px] px-4 py-3 text-sm uppercase tracking-[0.32em] text-[color:var(--muted)] transition-colors hover:bg-[color:var(--border)]/20 group-open:bg-[color:var(--border)]/15 group-open:text-[color:var(--foreground)]">
-                      <span className="summary-timeline text-[11px] tracking-[0.42em]">{item.timeline}</span>
-                      <span className="summary-divider" aria-hidden />
-                      <span className="summary-title text-current">{item.title}</span>
-                    </summary>
-                    <div className="summary-content mt-3 space-y-2 text-sm leading-7 text-[color:var(--foreground)]">
-                      <p className="text-xs uppercase tracking-[0.42em] text-[color:var(--muted)]">
-                        {item.location}
+                {hackathons.map((item, index) => (
+                  <AccordionItem
+                    key={item.title}
+                    timeline={item.timeline}
+                    label={item.title}
+                    isOpen={hackathonOpen === index}
+                    onToggle={() => toggleHackathon(index)}
+                  >
+                    <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">{item.location}</p>
+                    <p>{item.summary}</p>
+                    {item.links ? (
+                      <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+                        {item.links.join(" · ")}
                       </p>
-                      <p>{item.summary}</p>
-                      {item.links ? (
-                        <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
-                          {item.links.join(" · ")}
-                        </p>
-                      ) : null}
-                    </div>
-                  </details>
+                    ) : null}
+                  </AccordionItem>
                 ))}
               </div>
             </div>

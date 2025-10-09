@@ -72,6 +72,15 @@ details[open] > summary .summary-divider {
   background: var(--muted);
 }
 
+[data-open="true"] .summary-trigger {
+  background: var(--border);
+  color: var(--foreground);
+}
+
+[data-open="true"] .summary-trigger .summary-divider {
+  background: var(--muted);
+}
+
 .summary-timeline {
   flex-shrink: 0;
 }
@@ -91,7 +100,16 @@ details[open] > summary .summary-divider {
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
+.accordion-content {
+  transition: max-height 0.28s ease;
+}
+
 details[open] .summary-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-open="true"] .summary-content {
   opacity: 1;
   transform: translateY(0);
 }
