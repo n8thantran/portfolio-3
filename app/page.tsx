@@ -109,9 +109,21 @@ const AccordionItem = ({ timeline, label, children, isOpen, onToggle }: Accordio
   );
 };
 
+type NowPlayingData = {
+  isPlaying: boolean;
+  track: {
+    name: string;
+    artist: string;
+    album: string;
+    albumArt: string;
+    url: string;
+  } | null;
+};
+
 export default function Home() {
   const [theme, setTheme] = useState<Theme | null>(null);
   const [time, setTime] = useState<string>("");
+  const [nowPlaying, setNowPlaying] = useState<NowPlayingData | null>(null);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
@@ -141,6 +153,24 @@ export default function Home() {
 
     updateTime();
     const interval = window.setInterval(updateTime, 1000);
+    return () => window.clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const fetchNowPlaying = async () => {
+      try {
+        const response = await fetch('/api/lastfm');
+        if (response.ok) {
+          const data = await response.json();
+          setNowPlaying(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch now playing:', error);
+      }
+    };
+
+    fetchNowPlaying();
+    const interval = window.setInterval(fetchNowPlaying, 5000); // Update every 5 seconds
     return () => window.clearInterval(interval);
   }, []);
 
@@ -260,6 +290,34 @@ export default function Home() {
             {time || "--:--:--"}
           </span>
           <span className="h-px flex-1 bg-[color:var(--border)]" aria-hidden />
+          <a
+            href="https://linkedin.com/in/n8thantran"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-left hover:bg-[color:var(--border)] transition-colors"
+          >
+            <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
+              LinkedIn
+            </span>
+          </a>
+          <a
+            href="https://github.com/n8thantran"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-left hover:bg-[color:var(--border)] transition-colors"
+          >
+            <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
+              GitHub
+            </span>
+          </a>
+          <a
+            href="/resume"
+            className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-3 py-1.5 text-left hover:bg-[color:var(--border)] transition-colors"
+          >
+            <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)] group-hover:text-[color:var(--foreground)] transition-colors">
+              Resume
+            </span>
+          </a>
           <button
             type="button"
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
@@ -311,6 +369,65 @@ export default function Home() {
                 {activities.map((activity) => (
                   <p key={activity}>— {activity}</p>
                 ))}
+              </div>
+            </section>
+
+            <section className="flex flex-col gap-6">
+              <header className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+                now playing
+              </header>
+              <div className="rounded-[22px] border border-[color:var(--border)] p-4">
+                {nowPlaying?.track ? (
+                  <a 
+                    href={nowPlaying.track.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4 group"
+                  >
+                    {nowPlaying.track.albumArt && (
+                      <div className="relative w-16 h-16 flex-shrink-0">
+                        <img 
+                          src={nowPlaying.track.albumArt} 
+                          alt={`${nowPlaying.track.album} album art`}
+                          className="w-full h-full rounded-lg object-cover"
+                        />
+                        <div className="absolute inset-0 rounded-lg bg-black opacity-0 group-hover:opacity-10 transition-opacity" />
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0 space-y-1">
+                      <p className="text-sm font-medium text-[color:var(--foreground)] truncate group-hover:text-[color:var(--muted)] transition-colors">
+                        {nowPlaying.track.name}
+                      </p>
+                      <p className="text-xs text-[color:var(--muted)] truncate">
+                        {nowPlaying.track.artist}
+                      </p>
+                      {nowPlaying.isPlaying ? (
+                        <div className="flex items-center gap-2">
+                          <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                          </span>
+                          <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+                            listening now
+                          </span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
+                            last played
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </a>
+                ) : (
+                  <div className="flex items-center gap-3 text-[color:var(--muted)]">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                    </svg>
+                    <span className="text-xs">Not playing anything right now</span>
+                  </div>
+                )}
               </div>
             </section>
           </section>
