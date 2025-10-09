@@ -170,7 +170,7 @@ export default function Home() {
     };
 
     fetchNowPlaying();
-    const interval = window.setInterval(fetchNowPlaying, 5000); // Update every 5 seconds
+    const interval = window.setInterval(fetchNowPlaying, 1000); // Update every 5 seconds
     return () => window.clearInterval(interval);
   }, []);
 
@@ -483,6 +483,14 @@ export default function Home() {
         <footer className="flex items-center gap-4 text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
           <span>nathan tran</span>
           <span className="h-px flex-1 bg-[color:var(--border)]" aria-hidden />
+          <a
+            href="/parking"
+            className="transition-opacity hover:opacity-70"
+            aria-label="SJSU Parking Status"
+            title="SJSU Parking Status"
+          >
+            🚗
+          </a>
           <span>updated 2025</span>
         </footer>
       </div>
