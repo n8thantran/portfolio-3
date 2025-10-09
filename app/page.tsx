@@ -32,7 +32,7 @@ const useSequentialAccordion = () => {
 
 type AccordionItemProps = {
   timeline: string;
-  label: string;
+  label: string | ReactNode;
   children: ReactNode;
   isOpen: boolean;
   onToggle: () => void;
@@ -186,6 +186,7 @@ export default function Home() {
   const workExperience = [
     {
       company: "BloxShield",
+      link: "https://bloxshield.org/",
       timeline: "June 2025 - Present",
       role: "Software Engineering Intern",
       summary:
@@ -193,13 +194,15 @@ export default function Home() {
     },
     {
       company: "Uber",
-      timeline: "Dec. 2024 - Sept. 2025",
+      link: "https://uber.com",
+      timeline: "Dec. 2024 - Present",
       role: "Software Engineering Fellow",
       summary:
         "Selected for Uber's competitive career preparation program focused on technical interview preparation, data structures & algorithms, and software engineering best practices.",
     },
     {
       company: "Ego (YC W24)",
+      link: "https://ego.live",
       timeline: "Nov. 2024 - March 2025",
       role: "Software Engineering Intern",
       summary:
@@ -207,6 +210,7 @@ export default function Home() {
     },
     {
       company: "SJSU College of Engineering",
+      link: "https://sce.sjsu.edu/",
       timeline: "Sept. 2024 - Present",
       role: "Software Engineering Intern",
       summary:
@@ -214,8 +218,9 @@ export default function Home() {
     },
     {
       company: "Software and Computer Engineering Society",
-      timeline: "Sept. 2024 - Sept. 2025",
-      role: "AI/ML Team Lead",
+      link: "https://sce.sjsu.edu/",
+      timeline: "Sept. 2024 - Present",
+      role: "Artificial Intelligence & Machine Learning Team Lead",
       summary:
         "Led weekly workshops and team meetings focused on machine learning projects, guiding members through data analysis, model development, and collaborative coding practices using tools like Google Colab and Git.",
     },
@@ -228,6 +233,9 @@ export default function Home() {
       location: "San Francisco, California",
       summary:
         "Won 3rd place for developing OpsPilot, a zero-configuration DevOps platform that automatically discovers repositories, configures deployment pipelines, and provides live infrastructure intelligence using AWS and Terraform.",
+      links: [
+        { label: "Source", url: "https://github.com/n8thantran/afore-ai-agents-hackathon" },
+      ],
     },
     {
       title: "NVIDIA World's Shortest Hackathon 👑",
@@ -235,6 +243,9 @@ export default function Home() {
       location: "San Francisco, California",
       summary:
         "Top 5 Finalists for developing Juri, an AI-powered legal assistant application for founders and entrepreneurs, featuring natural language legal Q&A, document processing, and automated legal document generation using NVIDIA's Nemotron model.",
+      links: [
+        { label: "Source", url: "https://github.com/n8thantran/nvidia-agenthack-2025" },
+      ],
     },
     {
       title: "Humane Tech Hackathon 👑",
@@ -242,30 +253,42 @@ export default function Home() {
       location: "San Francisco, California",
       summary:
         "Won First Grand Prize for developing a platform for live call transcription using VAPI webhooks with real-time audio processing, transcript management, and modern dashboard visualization.",
+      links: [
+        { label: "Source", url: "https://github.com/n8thantran/humane-tech-hackathon" },
+      ],
     },
     {
       title: "San Francisco State University: SFHacks 👑",
       timeline: "April 2025",
       location: "San Francisco, California",
       summary:
-        "Won Best BioTech Hack and People of Color Empowerment awards by building agentic document workflows for first-gen immigrants struggling with medical paperwork, using video-based RAG automation to parse and fill documents.",
-      links: ["Devpost", "Source"],
+        "Won Best BioTech Hack and People of Color Empowerment awards by developing an Agentic document workflows for first-gen immigrants struggling with medical documents. A user uploads a video explaining their situation to power a RAG automation agent to parse and fill documents.",
+      links: [
+        { label: "Devpost", url: "https://devpost.com/software/form-force" },
+        { label: "Source", url: "https://github.com/jask1m/fillosophy" },
+      ],
     },
     {
       title: "CSU Eastbay: HackHayward 2025 👑",
       timeline: "February 2025",
       location: "Hayward, California",
       summary:
-        "Won Best Multimodal Use of Groq for creating an AI-powered browser agent that autonomously navigates websites via voice commands, leveraging PyGame for 3D rendering and Groq for DOM processing.",
-      links: ["Devpost", "Source"],
+        "Won Best Multimodal Use of Groq for developing an AI-powered Browser Agent that autonomously navigates websites and completes tasks via voice commands, utilizing PyGame for rendering the Browser Assistant 3D Model and Groq for processing the website's DOM.",
+      links: [
+        { label: "Devpost", url: "https://devpost.com/software/ava-zamdu0" },
+        { label: "Source", url: "https://github.com/n8thantran/HackHayward2025" },
+      ],
     },
     {
       title: "Stanford XR Hacks: Immerse the Bay 2024 👑",
       timeline: "November 2024",
       location: "Stanford, California",
       summary:
-        "Won Best Use of Amazon AWS, Best Integration of AI, and Runner Up for Meta with Dreamscapes, a VR sandbox enabling voice-commanded 3D model generation using FLUX.1-schelle, TripoSR, Redis vector search, and AWS S3.",
-      links: ["Devpost", "Source"],
+        "Won Best Use of Amazon AWS, Best Integration of AI prizes, and Runner Up for Meta for Dreamscapes, a VR sandbox enabling voice-commanded 3D model generation. Created an AI pipeline using FLUX.1-schelle and TripoSR models to convert text to 3D meshes in ~30 seconds, while implementing Redis vector search for asset caching and AWS S3 for model storage and delivery.",
+      links: [
+        { label: "Devpost", url: "https://devpost.com/software/stellar-horizons" },
+        { label: "Source", url: "https://github.com/banyar-shin/DreamScapes" },
+      ],
     },
   ];
 
@@ -442,7 +465,17 @@ export default function Home() {
                   <AccordionItem
                     key={item.company}
                     timeline={item.timeline}
-                    label={item.company}
+                    label={
+                      <a 
+                        href={item.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:text-[color:var(--accent)] transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {item.company}
+                      </a>
+                    }
                     isOpen={experienceOpen === index}
                     onToggle={() => toggleExperience(index)}
                   >
@@ -468,11 +501,21 @@ export default function Home() {
                   >
                     <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">{item.location}</p>
                     <p>{item.summary}</p>
-                    {item.links ? (
-                      <p className="text-[11px] uppercase tracking-[0.42em] text-[color:var(--muted)]">
-                        {item.links.join(" · ")}
-                      </p>
-                    ) : null}
+                    {item.links && item.links.length > 0 && (
+                      <div className="flex flex-wrap gap-3 mt-3">
+                        {item.links.map((link) => (
+                          <a
+                            key={link.url}
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[11px] uppercase tracking-[0.32em] text-[color:var(--muted)] hover:text-[color:var(--accent)] transition-colors underline decoration-dotted underline-offset-4"
+                          >
+                            {link.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
                   </AccordionItem>
                 ))}
               </div>
