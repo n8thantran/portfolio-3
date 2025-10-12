@@ -314,7 +314,7 @@ export default function Home() {
           </span>
           <span className="hidden sm:block h-px flex-1 bg-[color:var(--border)]" aria-hidden />
           <a
-            href="https://linkedin.com/in/n8thantran"
+            href="https://linkedin.com/in/nthntrn"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-[color:var(--border)] px-2.5 py-1.5 sm:px-3 text-left hover:bg-[color:var(--border)] transition-colors"
