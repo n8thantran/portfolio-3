@@ -228,6 +228,16 @@ export default function Home() {
 
   const hackathons = [
     {
+      title: "CalHacks 12 👑",
+      timeline: "October 2025",
+      location: "San Francisco, California",
+      summary: "Won Best Use of JanitorAI for developing Clean Getaway a game where you have to escape a city by Social Engineering AI Agent powered NPCs.",
+      links: [
+        { label: "Source", url: "https://github.com/iOliver678/calhacks12" },
+        { label: "Game Trailer", url: "https://youtu.be/JKwvzp-RNJs?si=hhEuhqRpXaoe54GK" },
+      ]
+    },
+    {
       title: "Agent Foundry 👑",
       timeline: "August 2025",
       location: "San Francisco, California",
