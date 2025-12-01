@@ -228,6 +228,16 @@ export default function Home() {
 
   const hackathons = [
     {
+      title: "DAHacks 4.0 👑",
+      timeline: "November 2025",
+      location: "Cupertino, California",
+      summary: "Won Director's Choice for ShieldOS, an autonomous security platform featuring real-time attack detection (DDoS, SQL injection) using Scapy packet sniffing, LLM-powered threat analysis with Groq, and automated vulnerability remediation via GitHub PR generation.",
+      links: [
+        { label: "Devpost", url: "https://devpost.com/software/shieldos-0oylw6" },
+        { label: "Source", url: "https://github.com/n8thantran/dahacks25" },
+      ],
+    },
+    {
       title: "CalHacks 12 👑",
       timeline: "October 2025",
       location: "San Francisco, California",
