@@ -185,6 +185,14 @@ export default function Home() {
 
   const workExperience = [
     {
+      company: "AfterQuery (YC W25)",
+      link: "https://afterquery.com/",
+      timeline: "Jan. 2026 - Present",
+      role: "Software Engineering Intern",
+      summary:
+        "Contributed to innovative AI research alongside a world-class team at a Y Combinator-backed lab, advancing the boundaries of artificial intelligence through creative experimentation and strong collaboration.",
+    },
+    {
       company: "BloxShield",
       link: "https://bloxshield.org/",
       timeline: "June 2025 - Present",
