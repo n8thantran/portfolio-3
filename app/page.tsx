@@ -120,10 +120,22 @@ type NowPlayingData = {
   } | null;
 };
 
+type ContributionDay = {
+  date: string;
+  count: number;
+  level: number;
+};
+
+type GitHubData = {
+  contributions: ContributionDay[];
+  totalContributions: number;
+};
+
 export default function Home() {
   const [theme, setTheme] = useState<Theme | null>(null);
   const [time, setTime] = useState<string>("");
   const [nowPlaying, setNowPlaying] = useState<NowPlayingData | null>(null);
+  const [github, setGithub] = useState<GitHubData | null>(null);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY) as Theme | null;
@@ -172,6 +184,22 @@ export default function Home() {
     fetchNowPlaying();
     const interval = window.setInterval(fetchNowPlaying, 1000); // Update every 5 seconds
     return () => window.clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const fetchGithub = async () => {
+      try {
+        const response = await fetch('/api/github');
+        if (response.ok) {
+          const data = await response.json();
+          setGithub(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch GitHub contributions:', error);
+      }
+    };
+
+    fetchGithub();
   }, []);
 
   const toggleTheme = () => {
@@ -429,16 +457,16 @@ export default function Home() {
               </header>
               <div className="rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-3 sm:p-4">
                 {nowPlaying?.track ? (
-                  <a 
-                    href={nowPlaying.track.url} 
-                    target="_blank" 
+                  <a
+                    href={nowPlaying.track.url}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 sm:gap-4 group"
                   >
                     {nowPlaying.track.albumArt && (
                       <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
-                        <img 
-                          src={nowPlaying.track.albumArt} 
+                        <img
+                          src={nowPlaying.track.albumArt}
                           alt={`${nowPlaying.track.album} album art`}
                           className="w-full h-full rounded-lg object-cover"
                         />
@@ -480,6 +508,87 @@ export default function Home() {
                   </div>
                 )}
               </div>
+            </section>
+
+            <section className="flex flex-col gap-4 sm:gap-6">
+              <header className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
+                github
+              </header>
+              <a
+                href="https://github.com/n8thantran"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rounded-[18px] sm:rounded-[22px] border border-[color:var(--border)] p-3 sm:p-4 hover:bg-[color:var(--border)]/10 transition-colors"
+              >
+                {github && github.contributions.length > 0 ? (
+                  <div className="space-y-3">
+                    <div className="overflow-x-auto">
+                      <div
+                        className="grid gap-[2px] sm:gap-[3px]"
+                        style={{
+                          gridTemplateRows: 'repeat(7, 1fr)',
+                          gridAutoFlow: 'column',
+                          gridAutoColumns: 'minmax(8px, 1fr)',
+                        }}
+                      >
+                        {github.contributions.map((day, index) => (
+                          <div
+                            key={day.date || index}
+                            className="w-2 h-2 sm:w-[10px] sm:h-[10px] rounded-[2px] transition-colors"
+                            style={{
+                              backgroundColor:
+                                day.level === 0
+                                  ? 'var(--border)'
+                                  : day.level === 1
+                                    ? theme === 'dark' ? '#0e4429' : '#9be9a8'
+                                    : day.level === 2
+                                      ? theme === 'dark' ? '#006d32' : '#40c463'
+                                      : day.level === 3
+                                        ? theme === 'dark' ? '#26a641' : '#30a14e'
+                                        : theme === 'dark' ? '#39d353' : '#216e39',
+                            }}
+                            title={`${day.count} contributions on ${day.date}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.32em] sm:tracking-[0.42em] text-[color:var(--muted)]">
+                        {github.totalContributions.toLocaleString()} contributions in {new Date().getFullYear()}
+                      </span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-[8px] sm:text-[9px] text-[color:var(--muted)]">Less</span>
+                        {[0, 1, 2, 3, 4].map((level) => (
+                          <div
+                            key={level}
+                            className="w-2 h-2 sm:w-[10px] sm:h-[10px] rounded-[2px]"
+                            style={{
+                              backgroundColor:
+                                level === 0
+                                  ? 'var(--border)'
+                                  : level === 1
+                                    ? theme === 'dark' ? '#0e4429' : '#9be9a8'
+                                    : level === 2
+                                      ? theme === 'dark' ? '#006d32' : '#40c463'
+                                      : level === 3
+                                        ? theme === 'dark' ? '#26a641' : '#30a14e'
+                                        : theme === 'dark' ? '#39d353' : '#216e39',
+                            }}
+                          />
+                        ))}
+                        <span className="text-[8px] sm:text-[9px] text-[color:var(--muted)]">More</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 sm:gap-3 text-[color:var(--muted)]">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                    </svg>
+                    <span className="text-[11px] sm:text-xs">Loading contributions...</span>
+                  </div>
+                )}
+              </a>
             </section>
           </section>
 
