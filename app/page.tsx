@@ -221,7 +221,7 @@ export default function Home() {
         "Contributed to innovative AI research alongside a world-class team at a Y Combinator-backed lab, advancing the boundaries of artificial intelligence through creative experimentation and strong collaboration.",
     },
     {
-      company: "BloxShield",
+      company: "International Online Crime Coordination Center (IOC3)",
       link: "https://bloxshield.org/",
       timeline: "June 2025 - Present",
       role: "Software Engineering Intern",
