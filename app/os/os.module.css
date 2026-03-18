@@ -1,0 +1,1144 @@
+.desktop {
+  min-height: 100vh;
+  overflow: hidden;
+  background: #008080;
+  color: #000;
+}
+
+.workspace {
+  position: relative;
+  min-height: calc(100vh - 44px);
+  padding: 12px;
+  overflow: hidden;
+}
+
+.iconField {
+  display: flex;
+  max-height: calc(100vh - 96px);
+  width: 286px;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  align-content: flex-start;
+}
+
+.desktopIcon {
+  display: flex;
+  width: 112px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  padding: 6px 4px;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.desktopIcon:hover .desktopIconLabel,
+.desktopIcon:focus-visible .desktopIconLabel {
+  background: #000080;
+}
+
+.desktopIcon:focus-visible {
+  outline: none;
+}
+
+.desktopIconLabel {
+  max-width: 108px;
+  padding: 2px 4px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.75);
+}
+
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  border-top: 2px solid #dfdfdf;
+  border-left: 2px solid #dfdfdf;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+}
+
+.titleBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 3px;
+  cursor: move;
+  user-select: none;
+}
+
+.titleBarActive {
+  background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  color: #fff;
+}
+
+.titleBarInactive {
+  background: linear-gradient(90deg, #7b7b7b 0%, #b5b5b5 100%);
+  color: #efefef;
+}
+
+.titleLabel {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.titleControls {
+  display: flex;
+  gap: 2px;
+}
+
+.captionButton,
+.toolbarButton,
+.browserButton,
+.taskButton,
+.startButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  color: #000;
+  font-size: 13px;
+}
+
+.buttonPressed {
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+}
+
+.captionButton {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  cursor: default;
+}
+
+.minimizeGlyph {
+  width: 8px;
+  height: 2px;
+  background: #000;
+  transform: translateY(4px);
+}
+
+.maximizeGlyph {
+  width: 8px;
+  height: 7px;
+  box-sizing: border-box;
+  border: 1px solid #000;
+}
+
+.closeGlyph {
+  font-weight: 700;
+  line-height: 1;
+}
+
+.windowInner {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  padding: 3px;
+}
+
+.menuBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 5px 10px 4px;
+  font-size: 13px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+}
+
+.toolbarButton,
+.browserButton {
+  min-height: 28px;
+  padding: 0 10px;
+  text-decoration: none;
+}
+
+.toolbarLabel {
+  font-size: 13px;
+}
+
+.addressRow,
+.addressRowStandalone {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.addressRow {
+  flex: 1;
+  margin-left: 6px;
+}
+
+.addressRowStandalone {
+  padding: 0 6px 6px;
+}
+
+.addressField,
+.insetPanel,
+.tray,
+.statusPane {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+.addressField {
+  flex: 1;
+  min-height: 28px;
+  background: #fff;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.explorerLayout {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: 210px 1fr;
+  gap: 6px;
+}
+
+.sidebarPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.sidebarTitle {
+  margin: 0;
+  color: #000080;
+  font-weight: 700;
+}
+
+.sidebarList {
+  margin: 0;
+  padding-left: 14px;
+  line-height: 1.35;
+}
+
+.explorerMain {
+  background: #fff;
+  padding: 12px;
+}
+
+.explorerGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.explorerItem {
+  display: flex;
+  min-height: 108px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  color: #000;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.explorerItem:hover,
+.explorerItem:focus-visible {
+  background: #000080;
+  color: #fff;
+  outline: none;
+}
+
+.statusBar {
+  display: flex;
+  gap: 2px;
+}
+
+.statusPane {
+  flex: 1;
+  min-height: 24px;
+  background: #c0c0c0;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+.notepadSurface {
+  flex: 1;
+  overflow: auto;
+  background: #fff;
+  padding: 10px;
+  font-family: "Courier New", "Lucida Console", monospace;
+  font-size: 14px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.listView {
+  flex: 1;
+  overflow: auto;
+  background: #fff;
+}
+
+.listHeader,
+.listRow {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.7fr;
+  gap: 12px;
+  padding: 7px 10px;
+  font-size: 13px;
+}
+
+.listHeader {
+  position: sticky;
+  top: 0;
+  background: #c0c0c0;
+  font-weight: 700;
+}
+
+.listRow:nth-child(even) {
+  background: #f3f3f3;
+}
+
+.rowMeta {
+  margin: 2px 0 0;
+  color: #444;
+}
+
+.linkStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.gamesLibrary {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px;
+}
+
+.gameCard {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px;
+  align-items: stretch;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #d0d0d0;
+  padding: 10px;
+  text-align: left;
+}
+
+.gameCard:hover,
+.gameCard:focus-visible {
+  outline: none;
+  background: #d9d9d9;
+}
+
+.gameCardArt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background: linear-gradient(180deg, #1b1030 0%, #481212 100%);
+}
+
+.gameCardBody {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gameCardTitle {
+  margin: 0;
+  font-size: 18px;
+}
+
+.gameCardText {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.gameCardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gameBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #c0c0c0;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.gameShelfNote {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background: #efefef;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.browserPage {
+  flex: 1;
+  overflow: auto;
+  background: #fff;
+  padding: 18px;
+}
+
+.browserHeading {
+  margin: 0;
+  font-size: 24px;
+}
+
+.browserParagraph {
+  margin: 10px 0 0;
+  max-width: 48ch;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.browserButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.documentLayout {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 8px;
+}
+
+.documentSurface {
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+  padding: 4px;
+}
+
+.documentFrame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #8f8f8f;
+}
+
+.documentSidebar,
+.profileDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #efefef;
+  padding: 12px;
+  font-size: 13px;
+}
+
+.documentSidebarTitle {
+  margin: 0;
+  color: #000080;
+  font-size: 15px;
+}
+
+.documentSidebarText {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.profileLayout {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 8px;
+}
+
+.profileCard {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 16px;
+  overflow: auto;
+  background: #fff;
+  padding: 18px;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.profileBadge {
+  display: flex;
+  width: 78px;
+  height: 78px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background: #efefef;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+.profileHeadline {
+  margin: 8px 0 0;
+  color: #333;
+  font-size: 14px;
+}
+
+.profileCopy {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.profileActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profileList {
+  margin: 0;
+  padding-left: 16px;
+  line-height: 1.5;
+}
+
+.parkingLayout {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summaryStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.summaryChip {
+  min-height: 28px;
+  background: #efefef;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.parkingGrid {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  overflow: auto;
+}
+
+.parkingCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #fff;
+  padding: 12px;
+}
+
+.parkingCardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.parkingCardTitle {
+  margin: 0;
+  font-size: 16px;
+}
+
+.parkingCardMeta {
+  margin: 4px 0 0;
+  color: #444;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.parkingStatus {
+  color: #000080;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.parkingNumbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.parkingMeter {
+  height: 16px;
+  overflow: hidden;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background: #d4d0c8;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+.parkingMeterFill {
+  height: 100%;
+  background: linear-gradient(90deg, #187f18 0%, #2fc72f 100%);
+}
+
+.parkingMeterWarn {
+  background: linear-gradient(90deg, #9c7b00 0%, #ddb000 100%);
+}
+
+.parkingMeterDanger {
+  background: linear-gradient(90deg, #8a1616 0%, #d13f3f 100%);
+}
+
+.emptyPanel {
+  display: flex;
+  min-height: 160px;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 18px;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.mediaLayout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mediaScreen {
+  min-height: 132px;
+  background: #000;
+  padding: 12px;
+  color: #00ff9c;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.mediaControls {
+  display: flex;
+  gap: 10px;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background: #c0c0c0;
+  padding: 10px;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+.albumArt,
+.albumArtPlaceholder {
+  width: 88px;
+  height: 88px;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  object-fit: cover;
+}
+
+.albumArtPlaceholder {
+  background: linear-gradient(135deg, #000080, #008080);
+}
+
+.mediaMeta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.mediaButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.doomShell {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 8px;
+  padding: 6px;
+}
+
+.doomViewport {
+  position: relative;
+  min-height: 420px;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background: #000;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+}
+
+.doomCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.doomPanel {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #d4d0c8;
+  padding: 12px;
+}
+
+.doomPanelTitle {
+  margin: 0;
+  font-size: 17px;
+}
+
+.doomPanelText {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.doomControlGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.doomButtonRow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.doomHint {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.startMenu {
+  position: fixed;
+  bottom: 44px;
+  left: 0;
+  z-index: 80;
+  display: grid;
+  width: 300px;
+  grid-template-columns: 26px 1fr;
+  border-top: 2px solid #dfdfdf;
+  border-left: 2px solid #dfdfdf;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+}
+
+.startMenuRail {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: linear-gradient(180deg, #000080, #1084d0);
+  padding: 8px 0;
+}
+
+.startMenuRail span {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.startMenuContent {
+  display: flex;
+  max-height: 380px;
+  flex-direction: column;
+  overflow: auto;
+  padding: 6px 3px;
+}
+
+.startMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  color: #000;
+  font-size: 14px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.startMenuItem:hover,
+.startMenuItem:focus-visible {
+  background: #000080;
+  color: #fff;
+  outline: none;
+}
+
+.startSeparator {
+  height: 2px;
+  margin: 4px 6px;
+  background: linear-gradient(180deg, #808080 0, #808080 50%, #fff 50%, #fff 100%);
+}
+
+.taskbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 44px;
+  border-top: 2px solid #dfdfdf;
+  background: #c0c0c0;
+  padding: 3px;
+}
+
+.startButton {
+  flex-shrink: 0;
+  min-width: 86px;
+  min-height: 34px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.taskButtons {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  gap: 4px;
+  overflow-x: auto;
+}
+
+.taskButton {
+  min-width: 196px;
+  min-height: 34px;
+  justify-content: flex-start;
+  padding: 0 10px;
+}
+
+.tray {
+  display: inline-flex;
+  min-width: 92px;
+  min-height: 34px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #c0c0c0;
+  padding: 0 8px;
+  font-size: 13px;
+}
+
+.trayDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #008000;
+}
+
+.startupOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+}
+
+.bootScreen {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+}
+
+.bootCard {
+  display: flex;
+  width: min(640px, calc(100vw - 48px));
+  flex-direction: column;
+  gap: 20px;
+  padding: 32px;
+}
+
+.bootEyebrow {
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+
+.bootHeading {
+  margin: 6px 0 0;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.bootProgressFrame {
+  height: 24px;
+  overflow: hidden;
+  border: 2px solid #fff;
+  padding: 2px;
+}
+
+.bootProgressFill {
+  height: 100%;
+  background: repeating-linear-gradient(90deg, #fff 0 18px, transparent 18px 24px);
+  animation: boot-progress 1.05s linear infinite;
+}
+
+.loginScreen {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: #008080;
+  padding: 24px;
+}
+
+.loginDialog {
+  width: min(580px, calc(100vw - 40px));
+  border-top: 2px solid #dfdfdf;
+  border-left: 2px solid #dfdfdf;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+}
+
+.loginTitleBar {
+  background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  padding: 5px 9px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.loginBody {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  font-size: 14px;
+}
+
+.loginCopy {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.loginCopy p {
+  margin: 0;
+}
+
+.loginSubtle {
+  margin-top: 6px !important;
+  color: #333;
+}
+
+.loginFields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.loginLabel {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.loginInput {
+  min-height: 32px;
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  background: #fff;
+  padding: 5px 10px;
+  box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #dfdfdf;
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+}
+
+.loginActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.loginStatus {
+  margin: 0;
+  min-height: 18px;
+  color: #333;
+}
+
+@keyframes boot-progress {
+  from {
+    transform: translateX(-36px);
+  }
+
+  to {
+    transform: translateX(36px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .workspace {
+    overflow: auto;
+    padding-bottom: 52px;
+  }
+
+  .iconField {
+    display: grid;
+    width: auto;
+    max-height: none;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .desktopIcon {
+    width: auto;
+  }
+
+  .window {
+    position: relative !important;
+    inset: auto !important;
+    width: auto !important;
+    height: auto !important;
+    margin-bottom: 10px;
+  }
+
+  .explorerLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .gameCard {
+    grid-template-columns: 1fr;
+  }
+
+  .documentLayout,
+  .profileLayout,
+  .parkingGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .doomShell {
+    grid-template-columns: 1fr;
+  }
+
+  .doomViewport {
+    min-height: 320px;
+  }
+
+  .listHeader,
+  .listRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .taskButton {
+    min-width: 148px;
+  }
+
+  .startMenu {
+    left: 4px;
+    width: min(320px, calc(100vw - 8px));
+  }
+
+  .loginLabel {
+    grid-template-columns: 1fr;
+  }
+}
