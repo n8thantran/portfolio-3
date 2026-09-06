@@ -12,7 +12,7 @@ import {
 import { Backdrop } from "../../backdrop";
 import { ThemeToggle } from "../../theme";
 import { NowPlaying } from "../../status";
-import { Calendar, MonthPicker } from "../calendar";
+import { MonthPicker } from "../picker";
 
 // The live month is prerendered and then refreshed in the background on this
 // cadence, so nobody ever waits on Last.fm to see the page: the first visitor in
@@ -121,7 +121,7 @@ export default async function Music({ params }: PageProps<"/music/[[...month]]">
 
   const [month, first] = await Promise.all([listeningMonth(key), firstMonthKey()]);
 
-  const { label, scrobbles, seconds, known, artists, tracks, albums } = month;
+  const { scrobbles, seconds, known, artists, tracks, albums } = month;
   const empty = artists.length === 0;
 
   return (
@@ -133,36 +133,23 @@ export default async function Music({ params }: PageProps<"/music/[[...month]]">
           <ThemeToggle />
         </header>
 
-        <p className="mt-2 font-mono text-[11px] text-muted">
-          {label}
-          {scrobbles ? ` · ${scrobbles.toLocaleString()} scrobbles` : ""}
-          {seconds ? (
-            <>
-              {" · "}
-              <span title={coverageNote(known)} className="cursor-help">
-                {known >= 0.999 ? "" : "~"}
-                {formatSpan(seconds)}
-              </span>
-            </>
-          ) : null}
-        </p>
-
-        <div className="mt-10 flex flex-col gap-8">
+        <p className="mt-1.5 flex flex-wrap items-center gap-x-1.5 font-mono text-[11px] text-muted">
           <MonthPicker
             year={month.year}
             month={month.month}
             first={first ?? "2000-01"}
             last={now}
           />
-
-          <Calendar
-            year={month.year}
-            label={label}
-            days={month.days}
-            startsOn={month.startsOn}
-            today={month.today}
-          />
-        </div>
+          {scrobbles ? (
+            <span>· {scrobbles.toLocaleString()} scrobbles</span>
+          ) : null}
+          {seconds ? (
+            <span title={coverageNote(known)} className="cursor-help">
+              · {known >= 0.999 ? "" : "~"}
+              {formatSpan(seconds)}
+            </span>
+          ) : null}
+        </p>
 
         <div className="mt-12 flex flex-1 flex-col gap-10">
           {empty ? (

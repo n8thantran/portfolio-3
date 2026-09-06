@@ -27,15 +27,6 @@ const WINDOW_S = 1800;
 // paging cost once a day at most, however many times it is opened.
 const ARCHIVE_S = 86_400;
 
-// Paging guard for the day by day counts. Forty pages is eight thousand plays in
-// one month, which is far past anything real.
-const MAX_PAGES = 40;
-
-// A busy month is around twenty pages. Firing all of them at once is rude to an
-// api with no published burst allowance, so they go out in batches instead. This
-// costs a few hundred milliseconds on a cold render and nothing on a warm one.
-const PAGE_BATCH = 8;
-
 export type Entry = {
   name: string;
   detail?: string;
@@ -56,12 +47,6 @@ export type ListeningMonth = {
   seconds: number | null;
   /** Share of the month's plays whose track length was actually known, 0 to 1. */
   known: number;
-  /** Scrobbles per day. Index 0 is the 1st. */
-  days: number[];
-  /** Weekday the 1st falls on, 0 is Sunday. */
-  startsOn: number;
-  /** Day of the month that is today, or null when this is not the current month. */
-  today: number | null;
   artists: Entry[];
   tracks: Entry[];
   albums: Entry[];
@@ -145,13 +130,6 @@ export function parseMonthKey(key: string | undefined) {
   if (month < 1 || month > 12 || year < 2000 || year > 2999) return null;
   return { year, month };
 }
-
-// A plain calendar date's weekday and length do not depend on the zone, so these
-// can be answered with UTC arithmetic and no offset work at all.
-const daysInMonth = (year: number, month: number) =>
-  new Date(Date.UTC(year, month, 0)).getUTCDate();
-const weekdayOfFirst = (year: number, month: number) =>
-  new Date(Date.UTC(year, month - 1, 1)).getUTCDay();
 
 function monthLabel(year: number, month: number) {
   return new Intl.DateTimeFormat("en-US", {
@@ -269,7 +247,7 @@ async function trackSeconds(
 }
 
 function trackKey(artist: string | undefined, name: string) {
-  return `${artist ?? ""} ${name}`.toLowerCase();
+  return `${artist ?? ""}\u0000${name}`.toLowerCase();
 }
 
 // Exact where the length is known; the rest of the plays are charged the average
@@ -295,60 +273,6 @@ function listeningTime(tracks: Entry[], lengths: Map<string, number>) {
     seconds: Math.round(knownSeconds + average * (totalPlays - knownPlays)),
     known: knownPlays / totalPlays,
   };
-}
-
-type RecentTrack = {
-  date?: { uts?: string };
-  "@attr"?: { nowplaying?: string };
-};
-
-// Per day counts, from the raw scrobble log rather than a chart, because a chart
-// has no timestamps in it. Page one is fetched first only to learn how many
-// pages there are; the rest go out together.
-async function playsByDay(
-  from: number,
-  to: number,
-  length: number,
-  ttl: number,
-) {
-  const counts = new Array<number>(length).fill(0);
-
-  const tally = (data: unknown) => {
-    const items = (data as { recenttracks?: { track?: RecentTrack[] } })
-      ?.recenttracks?.track;
-    if (!Array.isArray(items)) return;
-
-    for (const item of items) {
-      // the currently playing track is included with no date and is not a scrobble
-      if (item["@attr"]?.nowplaying) continue;
-      const uts = Number(item.date?.uts);
-      if (!Number.isFinite(uts) || uts <= 0) continue;
-
-      const day = partsIn(new Date(uts * 1000), LISTENING_TZ).day;
-      if (day >= 1 && day <= length) counts[day - 1]++;
-    }
-  };
-
-  const range = { from: String(from), to: String(to), limit: "200" };
-  const first = await call("user.getRecentTracks", { ...range, page: "1" }, ttl);
-  if (!first) return counts;
-  tally(first);
-
-  const pages = Math.min(
-    Number(first?.recenttracks?.["@attr"]?.totalPages ?? 1) || 1,
-    MAX_PAGES,
-  );
-
-  for (let page = 2; page <= pages; page += PAGE_BATCH) {
-    const batch = Array.from(
-      { length: Math.min(PAGE_BATCH, pages - page + 1) },
-      (_, i) =>
-        call("user.getRecentTracks", { ...range, page: String(page + i) }, ttl),
-    );
-    (await Promise.all(batch)).forEach(tally);
-  }
-
-  return counts;
 }
 
 /**
@@ -385,7 +309,6 @@ export async function listeningMonth(
   };
 
   const isCurrent = year === today.year && month === today.month;
-  const length = daysInMonth(year, month);
 
   const from = midnight(year, month, 1);
   const until = midnight(month === 12 ? year + 1 : year, (month % 12) + 1, 1);
@@ -397,12 +320,11 @@ export async function listeningMonth(
   const range = { from: String(from), to: String(to) };
   const ttl = isCurrent ? WINDOW_S : ARCHIVE_S;
 
-  const [artistData, trackData, albumData, lengths, days] = await Promise.all([
+  const [artistData, trackData, albumData, lengths] = await Promise.all([
     call("user.getWeeklyArtistChart", range, ttl),
     call("user.getWeeklyTrackChart", range, ttl),
     call("user.getWeeklyAlbumChart", range, ttl),
     trackSeconds(isCurrent, ttl),
-    playsByDay(from, to, length, ttl),
   ]);
 
   const artists = shape(artistData?.weeklyartistchart?.artist, false);
@@ -418,9 +340,6 @@ export async function listeningMonth(
     scrobbles: artists.reduce((total, entry) => total + entry.plays, 0),
     seconds,
     known,
-    days,
-    startsOn: weekdayOfFirst(year, month),
-    today: isCurrent ? today.day : null,
     artists: artists.slice(0, counts.artists),
     tracks: tracks.slice(0, counts.tracks),
     albums: albums.slice(0, counts.albums),
