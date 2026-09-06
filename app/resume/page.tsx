@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Backdrop } from "../backdrop";
 import { ThemeToggle } from "../theme";
+import { ResumeViewer } from "./viewer";
 
 export const metadata: Metadata = {
   title: "Resume · Nathan Tran",
@@ -35,31 +36,8 @@ export default function Resume() {
           </a>
         </p>
 
-        {/* An <object> rather than an <iframe> so there is somewhere to put a
-            fallback: a phone that refuses to embed a pdf shows the link
-            instead of an empty grey box. The hash hides the viewer's own
-            toolbar and thumbnail rail, which are chrome from a different
-            design, leaving just the document. */}
         <div className="mt-8 flex-1">
-          <object
-            data="/api/resume#toolbar=0&navpanes=0&view=FitH"
-            type="application/pdf"
-            aria-label="Nathan Tran's resume"
-            className="aspect-[8.5/11] w-full rounded-md border border-muted/25 bg-foreground/[0.03]"
-          >
-            <p className="p-6 text-[14px] leading-relaxed text-muted">
-              This browser will not show the pdf inline.{" "}
-              <a
-                href="/api/resume"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={link}
-              >
-                Open it in a new tab
-              </a>
-              .
-            </p>
-          </object>
+          <ResumeViewer />
         </div>
 
         <footer className="relative mt-12 flex flex-nowrap items-baseline justify-between gap-6 pt-12 font-mono text-[10.5px] whitespace-nowrap text-muted">
