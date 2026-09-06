@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Backdrop } from "../backdrop";
 import { ThemeToggle } from "../theme";
-import { NowPlaying } from "../status";
 import { awardCount, wins } from "./hackathons";
 
 export const metadata: Metadata = {
@@ -85,7 +84,6 @@ export default function Trophies() {
           >
             back
           </Link>
-          <NowPlaying />
         </footer>
       </main>
     </>
