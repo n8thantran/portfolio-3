@@ -18,6 +18,30 @@ const link =
 // Every row in the page shares this shape: content flush left, meta flush right.
 const row = "flex flex-nowrap items-baseline justify-between gap-6";
 
+// Drawn rather than set as an emoji: the footer is one muted colour and a colour
+// emoji would be the only thing on the page that ignores the theme.
+function TrophyIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M5 2.5h6v3a3 3 0 0 1-6 0z" />
+      <path d="M5 3.7H3.6a1.6 1.6 0 0 0 1.5 3" />
+      <path d="M11 3.7h1.4a1.6 1.6 0 0 1-1.5 3" />
+      <path d="M8 8.5v4.7" />
+      <path d="M5.9 13.2h4.2" />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -125,14 +149,24 @@ export default function Home() {
         className={`relative flex flex-nowrap items-baseline justify-between gap-6 pt-12 font-mono text-[10.5px] whitespace-nowrap text-muted`}
       >
         <Clock />
-        <Link
-          href="/music"
-          aria-label="Music"
-          title="Music"
-          className="shrink-0 text-[13px] leading-none transition-colors duration-200 hover:text-foreground focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-current"
-        >
-          ♪
-        </Link>
+        <span className="flex shrink-0 items-center gap-3.5 self-center">
+          <Link
+            href="/trophies"
+            aria-label="Trophies"
+            title="Trophies"
+            className="flex items-center leading-none transition-colors duration-200 hover:text-foreground focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-current"
+          >
+            <TrophyIcon />
+          </Link>
+          <Link
+            href="/music"
+            aria-label="Music"
+            title="Music"
+            className="flex items-center text-[13px] leading-none transition-colors duration-200 hover:text-foreground focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-current"
+          >
+            ♪
+          </Link>
+        </span>
         </footer>
       </main>
     </>
