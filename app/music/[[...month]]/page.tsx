@@ -133,7 +133,7 @@ export default async function Music({ params }: PageProps<"/music/[[...month]]">
           <ThemeToggle />
         </header>
 
-        <p className="mt-1.5 flex flex-wrap items-center gap-x-1.5 font-mono text-[11px] text-muted">
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1 font-mono text-[11px] text-muted">
           <MonthPicker
             year={month.year}
             month={month.month}
@@ -149,7 +149,7 @@ export default async function Music({ params }: PageProps<"/music/[[...month]]">
               {formatSpan(seconds)}
             </span>
           ) : null}
-        </p>
+        </div>
 
         <div className="mt-12 flex flex-1 flex-col gap-10">
           {empty ? (
