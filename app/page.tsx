@@ -18,6 +18,30 @@ const link =
 // Every row in the page shares this shape: content flush left, meta flush right.
 const row = "flex flex-nowrap items-baseline justify-between gap-6";
 
+// A rolled scroll: curled at the top right and bottom left, which is what keeps
+// it readable as paper rather than a rectangle once it is down at 13px.
+function ScrollIcon() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 16 16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M5.2 4.4h5.6v7.2H5.2z" />
+      <path d="M5.2 4.4a1.15 1.15 0 0 1 1.15-1.15h5.6a1.15 1.15 0 0 0-1.15 1.15" />
+      <path d="M10.8 11.6a1.15 1.15 0 0 1-1.15 1.15h-5.6a1.15 1.15 0 0 0 1.15-1.15" />
+      <path d="M6.9 6.6h2.2" />
+      <path d="M6.9 8.6h2.2" />
+    </svg>
+  );
+}
+
 // Drawn rather than set as an emoji: the footer is one muted colour and a colour
 // emoji would be the only thing on the page that ignores the theme.
 function TrophyIcon() {
@@ -150,6 +174,14 @@ export default function Home() {
       >
         <Clock />
         <span className="flex shrink-0 items-center gap-3.5 self-center">
+          <Link
+            href="/resume"
+            aria-label="Resume"
+            title="Resume"
+            className="flex items-center leading-none transition-colors duration-200 hover:text-foreground focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-current"
+          >
+            <ScrollIcon />
+          </Link>
           <Link
             href="/trophies"
             aria-label="Trophies"
